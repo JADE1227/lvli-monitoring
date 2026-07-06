@@ -432,13 +432,16 @@ function submitData() {
   history.unshift(entry);
   saveHistory();
 
-  let totalRows = 0;
-  SHEETS.forEach(s => { totalRows += draftState[s.id].rows.length; });
-  showToast('✅ 已提交！' + rn + ' · ' + totalRows + '条记录已保存至本地历史', 'success');
+    let totalRows = 0;
+    SHEETS.forEach(s => { totalRows += draftState[s.id].rows.length; });
+    showToast('✅ 已提交！' + rn + ' · ' + totalRows + '条记录已保存至本地历史', 'success');
 
-  initDraft();
-  renderTabs();
-  renderContent();
+    // 自动导出 Excel + JSON（在清空草稿前）
+    exportExcelSilent(rn);
+
+    initDraft();
+    renderTabs();
+    renderContent();
 }
 
 // =================== Admin Mode ===================
@@ -973,6 +976,33 @@ function exportExcel() {
   exportJSONForSend(rn, dateStr, safeName);
 
   // Show send-to-admin prompt
+  showSendToast(filename);
+}
+
+// 静默导出（提交数据后自动调用，不弹发送提示）
+function exportExcelSilent(rn) {
+  const wb = XLSX.utils.book_new();
+  SHEETS.forEach(sheet => {
+    const sd = draftState[sheet.id];
+    let aoa = [];
+    aoa.push([sheet.title]); aoa.push([sheet.desc]);
+    aoa.push(['填表人：' + rn]);
+    let metaRow = [];
+    sheet.metaFields.forEach(f => { metaRow.push(f.label + ': ' + (sd.meta[f.key] || '')); });
+    aoa.push(metaRow); aoa.push([]);
+    aoa.push(sheet.columns.map(c => c.label));
+    sd.rows.forEach(row => { aoa.push(sheet.columns.map(c => row[c.key] !== undefined ? row[c.key] : '')); });
+    if (sheet.note) { aoa.push([]); sheet.note.split('\n').forEach(l => aoa.push([l])); }
+    const ws = XLSX.utils.aoa_to_sheet(aoa);
+    ws['!merges'] = [{ s:{r:0,c:0}, e:{r:0,c:sheet.columns.length-1} },{ s:{r:1,c:0}, e:{r:1,c:sheet.columns.length-1} }];
+    ws['!cols'] = sheet.columns.map(c => ({ wch: Math.max(c.label.length*2, 12) }));
+    XLSX.utils.book_append_sheet(wb, ws, sheet.name.replace(/[\\\/\?\*\[\]:]/g, '_').substring(0,31));
+  });
+  const dateStr = formatDate();
+  const safeName = rn.replace(/[\\\/\?\*\[\]:]/g, '_');
+  const filename = dateStr + '_' + safeName + '_绿篱监测记录.xlsx';
+  XLSX.writeFile(wb, filename);
+  exportJSONForSend(rn, dateStr, safeName);
   showSendToast(filename);
 }
 
