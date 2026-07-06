@@ -820,6 +820,8 @@ function renderRow(sheet, row, idx) {
     const val = row[col.key] !== undefined ? row[col.key] : '';
     if (col.type === 'select') {
       cells += `<td><select onchange="updateCell('${sheet.id}',${idx},'${col.key}',this.value)"><option value="">请选择</option>${(col.options||[]).map(o => `<option value="${o}" ${val===o?'selected':''}>${o}</option>`).join('')}</select></td>`;
+    } else if (col.type === 'number') {
+      cells += `<td><input type="number" value="${val}" min="0" step="any" onchange="updateCell('${sheet.id}',${idx},'${col.key}',this.value)"></td>`;
     } else {
       cells += `<td><input type="${col.type}" value="${val}" onchange="updateCell('${sheet.id}',${idx},'${col.key}',this.value)"></td>`;
     }
