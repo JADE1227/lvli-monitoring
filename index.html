@@ -220,17 +220,14 @@ body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hi
   <div class="send-toast-card">
     <div class="icon">📤</div>
     <h3>文件已导出！</h3>
-    <p style="color:var(--gray-500);font-size:14px;">已同时导出 Excel 和 JSON 两个文件，请一起发送给管理员</p>
+    <p style="color:var(--gray-500);font-size:14px;">已同时导出 Excel 和 JSON 两个文件</p>
     <div class="filename" id="exportedFileName"></div>
     <div style="font-size:12px;color:var(--gray-400);margin-top:2px;">（JSON文件用于管理员导入汇总，Excel文件可直接查看）</div>
     <div class="admin-info">
-      <div style="font-size:13px;color:var(--amber-700);margin-bottom:4px;">📱 管理员微信</div>
-      <div class="phone-big">18665372773</div>
-      <div style="font-size:12px;color:var(--gray-500);margin-top:4px;">请通过微信发送两个文件</div>
+      <div style="font-size:14px;color:var(--amber-700);">📱 请将下载的文件发送至管理员</div>
     </div>
     <ol class="step-list">
-      <li>打开微信，搜索手机号 <strong>18665372773</strong></li>
-      <li>发送刚才导出的 <strong>Excel文件</strong> 和 <strong>JSON文件</strong> 给管理员</li>
+      <li>将下载的 <strong>Excel文件</strong> 和 <strong>JSON文件</strong> 通过微信发送给管理员</li>
       <li>管理员收到后通过"导入汇总"合并数据</li>
     </ol>
     <button class="btn btn-primary" onclick="closeSendToast()" style="margin-top:8px;">我知道了</button>
@@ -383,21 +380,21 @@ function handleSubmit() {
 }
 
 function updateSubmitButton() {
-  const btn = document.getElementById('btnSubmit');
-  if (!btn) return;
-  const recent = getRecentModifiableEntry();
-  if (recent) {
-    btn.textContent = '✏️ 修改数据';
-    btn.className = 'btn btn-sm';
-    btn.style.background = 'var(--amber-200)';
-    btn.style.color = 'var(--amber-700)';
-    btn.style.fontWeight = '600';
-  } else {
-    btn.textContent = '📤 提交数据';
-    btn.className = 'btn btn-success';
-    btn.style.background = '';
-    btn.style.color = '';
-    btn.style.fontWeight = '';
+    const btn = document.getElementById('btnSubmit');
+    if (!btn) return;
+    const recent = getRecentModifiableEntry();
+    if (recent) {
+      btn.textContent = '✏️ 修改并导出';
+      btn.className = 'btn btn-sm';
+      btn.style.background = 'var(--amber-200)';
+      btn.style.color = 'var(--amber-700)';
+      btn.style.fontWeight = '600';
+    } else {
+      btn.textContent = '📤 提交并导出';
+      btn.className = 'btn btn-success';
+      btn.style.background = '';
+      btn.style.color = '';
+      btn.style.fontWeight = '';
   }
 }
 
@@ -795,7 +792,8 @@ function renderContent() {
   html += `</tbody></table></div>
     <div class="table-footer">
       <button class="btn btn-primary btn-sm" onclick="addRow('${sheet.id}')">➕ 添加一行</button>
-      <button class="btn btn-secondary btn-sm" onclick="addRow('${sheet.id}',5)">➕ 添加5行</button>`;
+      <button class="btn btn-secondary btn-sm" onclick="addRow('${sheet.id}',5)">➕ 添加5行</button>
+      <button class="btn btn-outline btn-sm" onclick="saveCurrentSheet('${sheet.id}')" style="margin-left:auto;">💾 保存当前表</button>`;
   if (isAdmin && sd.rows.length > 0) {
     html += `<button class="btn btn-danger btn-sm" onclick="clearSheetDraft('${sheet.id}')">🗑️ 清空此表</button>`;
   }
@@ -804,10 +802,10 @@ function renderContent() {
   // Submit bar (non-admin only)
   if (!isAdmin) {
     const recent = getRecentModifiableEntry();
-    const btnLabel = recent ? '✏️ 修改数据' : '📤 提交数据';
+    const btnLabel = recent ? '✏️ 修改并导出' : '📤 提交并导出';
     html += renderCompletionPanel();
     html += `<div class="submit-bar">
-      <span class="hint-text">💡 所有表格填写完成后，点击"${recent ? '修改数据' : '提交数据'}"将数据保存至本地历史。</span>
+      <span class="hint-text">💡 每个工作表填完后先点"💾 保存当前表"，全部完成后点"${recent ? '修改并导出' : '提交并导出'}"。</span>
       <button class="btn ${recent ? '' : 'btn-success'}" onclick="handleSubmit()" style="${recent ? 'background:var(--amber-200);color:var(--amber-700);font-weight:600;display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:none;border-radius:var(--radius);font-size:14px;cursor:pointer;' : ''}">${btnLabel}</button>
     </div>`;
   }
@@ -853,6 +851,18 @@ function deleteRow(sheetId, idx) {
   draftState[sheetId].rows.splice(idx, 1);
   renderContent();
   updateBadge(sheetId);
+}
+
+// 保存当前子表草稿到 localStorage（不提交到历史）
+function saveCurrentSheet(sheetId) {
+  try {
+    const key = 'hedge_draft_' + sheetId;
+    localStorage.setItem(key, JSON.stringify(draftState[sheetId]));
+    const sheet = SHEETS.find(s => s.id === sheetId);
+    showToast('✅ ' + (sheet ? sheet.name : sheetId) + ' 已保存', 'success');
+  } catch(e) {
+    showToast('保存失败，请检查浏览器存储空间', 'error');
+  }
 }
 
 function clearSheetDraft(sheetId) {
