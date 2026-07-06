@@ -534,8 +534,8 @@ function renderHistoryContent() {
 
   html += `<div class="history-actions">
     <button class="btn btn-primary btn-sm" onclick="showFillMode()">✏️ 返回填写</button>
-    <button class="btn btn-outline btn-sm" onclick="importMultipleJSON()">📂 导入汇总</button>
-    <button class="btn btn-outline btn-sm" onclick="exportAllHistoryExcel()">📥 导出汇总Excel</button>
+    <button class="btn btn-secondary btn-sm" onclick="importMultipleJSON()">📂 导入汇总</button>
+    <button class="btn btn-secondary btn-sm" onclick="exportAllHistoryExcel()">📥 导出汇总Excel</button>
     <button class="btn btn-danger btn-sm" onclick="clearAllHistory()">🗑️ 清空全部历史</button>
     <span style="margin-left:auto;font-size:13px;color:var(--gray-500)">共 ${history.length} 条提交记录</span>
   </div>`;
