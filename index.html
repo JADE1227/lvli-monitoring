@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>福田红树林生态公园绿篱植被更新试验 — 监测调查表</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --green-900:#1b3a2b; --green-700:#2d5a3f; --green-600:#3a6b4e;
+  --green-500:#4a8b62; --green-100:#e8f3ec; --green-50:#f4f9f6;
+  --gray-50:#f9fafb; --gray-100:#f3f4f6; --gray-200:#e5e7eb;
+  --gray-300:#d1d5db; --gray-500:#6b7280; --gray-700:#374151; --gray-900:#111827;
+  --white:#fff; --red-500:#ef4444; --red-50:#fef2f2;
+  --amber-50:#fffbeb; --amber-200:#fde68a; --amber-700:#b45309;
+  --blue-50:#eff6ff; --blue-500:#3b82f6; --blue-700:#1d4ed8;
+  --purple-50:#faf5ff; --purple-500:#8b5cf6; --purple-700:#6d28d9;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.06);
+  --shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06);
+  --shadow-md:0 4px 6px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.06);
+  --shadow-lg:0 10px 15px rgba(0,0,0,.1),0 4px 6px rgba(0,0,0,.05);
+  --radius:10px; --radius-lg:14px;
+}
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; background:var(--gray-100); color:var(--gray-900); line-height:1.6; }
+.app-header { background:linear-gradient(135deg,var(--green-700),var(--green-900)); color:var(--white); padding:20px 24px; position:sticky; top:0; z-index:100; box-shadow:var(--shadow-md); }
+.app-header h1 { font-size:20px; font-weight:700; letter-spacing:.5px; }
+.app-header .subtitle { font-size:13px; opacity:.85; margin-top:4px; }
+.app-header .toolbar { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; align-items:center; }
+.btn { display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border:none; border-radius:var(--radius); font-size:14px; font-weight:500; cursor:pointer; transition:all .15s; }
+.btn-primary { background:var(--green-500); color:var(--white); }
+.btn-primary:hover { background:var(--green-600); }
+.btn-outline { background:rgba(255,255,255,.12); color:var(--white); border:1px solid rgba(255,255,255,.25); }
+.btn-outline:hover { background:rgba(255,255,255,.2); }
+.btn-danger { background:var(--red-500); color:var(--white); }
+.btn-danger:hover { opacity:.85; }
+.btn-sm { padding:5px 12px; font-size:13px; }
+.btn-secondary { background:var(--gray-200); color:var(--gray-700); }
+.btn-secondary:hover { background:var(--gray-300); }
+.btn-purple { background:var(--purple-500); color:var(--white); }
+.btn-purple:hover { background:var(--purple-700); }
+.btn-success { background:var(--green-500); color:var(--white); }
+.btn-success:hover { background:var(--green-600); }
+.mode-indicator { display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600; }
+.mode-indicator.fill { background:rgba(74,139,98,.3); color:#c6f6d5; }
+.mode-indicator.admin { background:rgba(139,92,246,.35); color:#e9d5ff; }
+.mode-indicator.history { background:rgba(59,130,246,.35); color:#bfdbfe; }
+.mode-dot { width:8px; height:8px; border-radius:50%; }
+.mode-indicator.fill .mode-dot { background:#68d391; }
+.mode-indicator.admin .mode-dot { background:#c4b5fd; }
+.mode-indicator.history .mode-dot { background:#93c5fd; }
+.tab-bar { display:flex; background:var(--white); border-bottom:2px solid var(--gray-200); overflow-x:auto; position:sticky; top:81px; z-index:90; box-shadow:var(--shadow-sm); }
+.tab-item { padding:14px 18px; font-size:14px; font-weight:500; color:var(--gray-500); cursor:pointer; border-bottom:3px solid transparent; white-space:nowrap; transition:all .15s; display:flex; align-items:center; gap:6px; }
+.tab-item:hover { color:var(--gray-700); background:var(--gray-50); }
+.tab-item.active { color:var(--green-700); border-bottom-color:var(--green-500); font-weight:600; }
+.tab-badge { background:var(--green-100); color:var(--green-700); font-size:11px; padding:1px 7px; border-radius:10px; font-weight:600; }
+.app-content { max-width:1200px; margin:0 auto; padding:20px; }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+.sheet-info { background:var(--green-50); border-left:4px solid var(--green-500); padding:14px 18px; border-radius:0 var(--radius) var(--radius) 0; margin-bottom:20px; }
+.sheet-info h2 { font-size:17px; color:var(--green-900); margin-bottom:6px; }
+.sheet-info p { font-size:13px; color:var(--gray-700); line-height:1.7; }
+.sheet-info .note { background:var(--amber-50); border:1px solid var(--amber-200); border-radius:var(--radius); padding:10px 14px; margin-top:10px; font-size:12.5px; color:var(--amber-700); line-height:1.6; }
+.form-meta { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-bottom:20px; }
+.form-meta .field { background:var(--white); padding:12px 14px; border-radius:var(--radius); box-shadow:var(--shadow-sm); }
+.field label { display:block; font-size:12px; font-weight:600; color:var(--gray-500); margin-bottom:4px; text-transform:uppercase; letter-spacing:.3px; }
+.field input, .field select, .field textarea { width:100%; padding:8px 10px; border:1px solid var(--gray-300); border-radius:8px; font-size:14px; font-family:inherit; transition:border-color .15s; }
+.field input:focus, .field select:focus, .field textarea:focus { outline:none; border-color:var(--green-500); box-shadow:0 0 0 3px rgba(74,139,98,.12); }
+.data-table-wrapper { background:var(--white); border-radius:var(--radius-lg); box-shadow:var(--shadow); overflow:hidden; margin-bottom:20px; }
+.data-table { width:100%; border-collapse:collapse; font-size:13px; }
+.data-table th { background:var(--green-700); color:var(--white); padding:10px 12px; text-align:left; font-weight:600; white-space:nowrap; position:sticky; top:0; }
+.data-table td { padding:6px; border-bottom:1px solid var(--gray-200); vertical-align:top; }
+.data-table tr:hover { background:var(--green-50); }
+.data-table input, .data-table select, .data-table textarea { width:100%; padding:7px 9px; border:1px solid var(--gray-300); border-radius:6px; font-size:13px; font-family:inherit; background:var(--white); transition:all .15s; }
+.data-table input:focus, .data-table select:focus, .data-table textarea:focus { outline:none; border-color:var(--green-500); box-shadow:0 0 0 2px rgba(74,139,98,.1); }
+.data-table input[type=number] { max-width:90px; }
+.data-table .row-num { text-align:center; color:var(--gray-500); font-weight:600; font-size:12px; width:36px; }
+.del-row-btn { background:none; border:none; color:var(--red-500); cursor:pointer; font-size:18px; padding:4px 8px; border-radius:4px; transition:all .15s; }
+.del-row-btn:hover { background:var(--red-50); }
+.table-footer { padding:12px 16px; display:flex; gap:10px; border-top:1px solid var(--gray-200); background:var(--gray-50); flex-wrap:wrap; }
+.empty-row { text-align:center; color:var(--gray-500); padding:30px; font-size:14px; }
+.admin-bar { background:var(--purple-50); border:1px solid var(--purple-500); border-radius:var(--radius); padding:12px 16px; margin-bottom:16px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.admin-bar .label { font-size:13px; font-weight:600; color:var(--purple-700); display:flex; align-items:center; gap:4px; }
+.col-del-btn { background:none; border:none; color:var(--red-500); cursor:pointer; font-size:15px; padding:2px 6px; border-radius:4px; margin-left:4px; vertical-align:middle; }
+.col-del-btn:hover { background:var(--red-50); }
+.th-admin-actions { width:40px; text-align:center; }
+.modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.4); z-index:1000; display:none; align-items:center; justify-content:center; }
+.modal-overlay.show { display:flex; }
+.modal { background:var(--white); border-radius:var(--radius-lg); box-shadow:var(--shadow-lg); width:520px; max-width:90vw; max-height:85vh; overflow-y:auto; }
+.modal-header { padding:18px 24px; border-bottom:1px solid var(--gray-200); display:flex; justify-content:space-between; align-items:center; }
+.modal-header h3 { font-size:17px; color:var(--gray-900); }
+.modal-close { background:none; border:none; font-size:24px; cursor:pointer; color:var(--gray-500); padding:0 4px; }
+.modal-close:hover { color:var(--gray-900); }
+.modal-body { padding:24px; }
+.modal-body .field-group { margin-bottom:16px; }
+.modal-body .field-group label { display:block; font-size:13px; font-weight:600; color:var(--gray-700); margin-bottom:6px; }
+.modal-body .field-group input, .modal-body .field-group select { width:100%; padding:8px 12px; border:1px solid var(--gray-300); border-radius:8px; font-size:14px; font-family:inherit; }
+.modal-body .field-group input:focus, .modal-body .field-group select:focus { outline:none; border-color:var(--green-500); box-shadow:0 0 0 3px rgba(74,139,98,.12); }
+.modal-body .field-group .hint { font-size:12px; color:var(--gray-500); margin-top:4px; }
+.modal-footer { padding:16px 24px; border-top:1px solid var(--gray-200); display:flex; justify-content:flex-end; gap:10px; }
+.pw-modal { width:360px; }
+.pw-modal .modal-body { text-align:center; }
+.pw-modal input { text-align:center; font-size:18px; letter-spacing:4px; }
+.pw-error { color:var(--red-500); font-size:13px; margin-top:8px; min-height:18px; }
+.app-footer { text-align:center; padding:20px; color:var(--gray-500); font-size:12px; }
+.toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(100px); background:var(--gray-900); color:var(--white); padding:12px 28px; border-radius:var(--radius); font-size:14px; z-index:9999; opacity:0; transition:all .3s; box-shadow:var(--shadow-lg); }
+.toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+.toast.success { background:var(--green-600); }
+.toast.error { background:var(--red-500); }
+.admin-banner { background:linear-gradient(90deg,var(--purple-700),var(--purple-500)); color:var(--white); padding:10px 20px; font-size:13px; display:flex; align-items:center; gap:8px; justify-content:center; }
+
+/* === History Viewer === */
+.history-list { margin-bottom:20px; }
+.history-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow-sm); padding:14px 18px; margin-bottom:10px; cursor:pointer; border-left:4px solid var(--blue-500); transition:all .15s; display:flex; justify-content:space-between; align-items:center; }
+.history-card:hover { box-shadow:var(--shadow-md); transform:translateY(-1px); }
+.history-card .hc-info { flex:1; }
+.history-card .hc-title { font-weight:600; font-size:15px; color:var(--gray-900); }
+.history-card .hc-meta { font-size:12px; color:var(--gray-500); margin-top:4px; }
+.history-card .hc-badge { background:var(--blue-50); color:var(--blue-700); font-size:12px; padding:3px 10px; border-radius:12px; font-weight:500; white-space:nowrap; }
+.history-table-wrapper { background:var(--white); border-radius:var(--radius-lg); box-shadow:var(--shadow); overflow:hidden; margin-bottom:20px; }
+.history-table-wrapper .readonly-table td { padding:8px 12px; font-size:13px; }
+.history-empty { text-align:center; padding:40px; color:var(--gray-500); }
+.history-actions { display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
+.submit-bar { background:var(--green-50); border:2px dashed var(--green-300); border-radius:var(--radius); padding:14px 18px; margin-bottom:20px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.submit-bar .hint-text { font-size:13px; color:var(--gray-700); flex:1; }
+
+/* === Completion Check Panel === */
+.completion-panel { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow-sm); padding:16px 20px; margin-bottom:20px; }
+.completion-panel h3 { font-size:15px; color:var(--gray-900); margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.completion-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:8px; }
+.completion-item { display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:8px; font-size:13px; border:1px solid var(--gray-200); }
+.completion-item.done { border-color:var(--green-300); background:var(--green-50); color:var(--green-700); }
+.completion-item.empty { border-color:var(--gray-200); background:var(--gray-50); color:var(--gray-500); }
+.completion-item .ci-icon { font-size:16px; }
+.completion-item .ci-count { margin-left:auto; font-weight:600; font-size:12px; }
+.completion-summary { margin-top:10px; font-size:13px; color:var(--gray-700); }
+.completion-summary .ok { color:var(--green-600); font-weight:600; }
+.completion-summary .warn { color:var(--amber-700); font-weight:600; }
+
+/* === Warm Prompt === */
+.warm-prompt { background:var(--blue-50); border:1px solid var(--blue-500); border-radius:var(--radius); padding:18px 24px; text-align:center; margin-bottom:20px; }
+.warm-prompt h3 { color:var(--blue-700); font-size:17px; margin-bottom:8px; }
+.warm-prompt p { color:var(--gray-700); font-size:14px; margin-bottom:16px; }
+
+/* Send to admin modal */
+.send-modal { width:420px; text-align:center; }
+.send-modal .admin-qr { background:var(--gray-50); border:2px dashed var(--gray-300); border-radius:var(--radius); padding:24px; margin:16px 0; }
+.send-modal .admin-qr .phone { font-size:28px; font-weight:700; color:var(--green-700); letter-spacing:2px; }
+.send-modal .send-steps { text-align:left; background:var(--blue-50); border-radius:var(--radius); padding:14px 18px; margin-top:14px; font-size:13px; line-height:2; color:var(--gray-700); }
+.send-modal .send-steps strong { color:var(--blue-700); }
+#sendToast { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.5); z-index:10000; display:none; align-items:center; justify-content:center; }
+#sendToast.show { display:flex; }
+#sendToast .send-toast-card { background:var(--white); border-radius:var(--radius-lg); box-shadow:var(--shadow-lg); width:440px; max-width:90vw; padding:28px 24px; text-align:center; }
+#sendToast .send-toast-card .icon { font-size:48px; margin-bottom:12px; }
+#sendToast .send-toast-card h3 { font-size:18px; color:var(--gray-900); margin-bottom:8px; }
+#sendToast .send-toast-card .filename { background:var(--green-50); padding:8px 14px; border-radius:8px; font-size:13px; color:var(--green-700); font-weight:600; margin:12px 0; display:inline-block; }
+#sendToast .send-toast-card .admin-info { background:var(--amber-50); border:2px solid var(--amber-200); border-radius:var(--radius); padding:16px; margin:16px 0; }
+#sendToast .send-toast-card .admin-info .phone-big { font-size:24px; font-weight:700; color:var(--green-700); margin:8px 0; }
+#sendToast .send-toast-card .step-list { text-align:left; font-size:13px; line-height:2; color:var(--gray-700); margin:12px 0; padding-left:20px; }
+
+@media(max-width:768px) {
+  .app-header h1 { font-size:16px; }
+  .app-content { padding:12px; }
+  .tab-item { padding:12px 12px; font-size:13px; }
+  .data-table { font-size:12px; }
+  .data-table th { padding:8px 6px; }
+  .data-table input, .data-table select { padding:6px 4px; font-size:12px; }
+  .form-meta { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <h1>🌳 福田红树林生态公园绿篱植被更新试验 — 监测调查表</h1>
+  <div class="subtitle" id="subtitle">每次打开均为空白表格 · 填写完成后提交保存</div>
+  <!-- 填表人信息条 -->
+  <div id="recorderBar" style="display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);padding:6px 12px;border-radius:8px;">
+      <span style="font-size:13px;color:#fff;opacity:.85;">👤 填表人</span>
+      <input type="text" id="recorderName" placeholder="请输入姓名" style="padding:5px 10px;border:1px solid rgba(255,255,255,.3);border-radius:6px;font-size:13px;background:rgba(255,255,255,.9);width:120px;" onchange="onRecorderChange()">
+    </div>
+    <span id="recorderWarning" style="font-size:12px;color:#fde68a;display:none;">⚠ 请先填写姓名</span>
+  </div>
+  <div class="toolbar">
+    <button class="btn btn-success" onclick="handleSubmit()" id="btnSubmit">📤 提交数据</button>
+    <button class="btn btn-outline" onclick="exportExcel()" id="btnExport">📥 一键导出Excel</button>
+    <span id="adminOnlyBtns" style="display:none;">
+      <button class="btn btn-outline" onclick="importJSON()">📂 导入汇总</button>
+    </span>
+    <span style="flex:1"></span>
+    <span class="mode-indicator fill" id="modeIndicator">
+      <span class="mode-dot"></span>
+      <span id="modeText">填写模式</span>
+    </span>
+    <button class="btn btn-purple" id="adminToggleBtn" onclick="toggleAdmin()">🔐 管理员模式</button>
+  </div>
+</div>
+
+<div id="adminBanner" style="display:none">
+  <div class="admin-banner" id="adminBannerText">
+    🔧 管理员模式已开启 — 你可以编辑列定义、增删行。
+  </div>
+</div>
+
+<div class="tab-bar" id="tabBar"></div>
+
+<div class="app-content" id="appContent"></div>
+
+<div class="app-footer">
+  数据保存在浏览器本地存储 · 导出后请发送给管理员微信 ${ADMIN_WECHAT} · 管理员可导入汇总<br>
+  福田红树林生态公园绿篱植被更新试验项目 © 2025
+</div>
+
+<div class="toast" id="toast"></div>
+
+<input type="file" id="fileInput" accept=".json" style="display:none">
+
+<!-- Send to Admin Toast -->
+<div id="sendToast">
+  <div class="send-toast-card">
+    <div class="icon">📤</div>
+    <h3>文件已导出！</h3>
+    <p style="color:var(--gray-500);font-size:14px;">已同时导出 Excel 和 JSON 两个文件，请一起发送给管理员</p>
+    <div class="filename" id="exportedFileName"></div>
+    <div style="font-size:12px;color:var(--gray-400);margin-top:2px;">（JSON文件用于管理员导入汇总，Excel文件可直接查看）</div>
+    <div class="admin-info">
+      <div style="font-size:13px;color:var(--amber-700);margin-bottom:4px;">📱 管理员微信</div>
+      <div class="phone-big">18665372773</div>
+      <div style="font-size:12px;color:var(--gray-500);margin-top:4px;">请通过微信发送两个文件</div>
+    </div>
+    <ol class="step-list">
+      <li>打开微信，搜索手机号 <strong>18665372773</strong></li>
+      <li>发送刚才导出的 <strong>Excel文件</strong> 和 <strong>JSON文件</strong> 给管理员</li>
+      <li>管理员收到后通过"导入汇总"合并数据</li>
+    </ol>
+    <button class="btn btn-primary" onclick="closeSendToast()" style="margin-top:8px;">我知道了</button>
+  </div>
+</div>
+
+<!-- Password Modal -->
+<div class="modal-overlay" id="pwModal">
+  <div class="modal pw-modal">
+    <div class="modal-header">
+      <h3>🔐 进入管理员模式</h3>
+      <button class="modal-close" onclick="closePwModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="margin-bottom:16px;color:var(--gray-500);font-size:13px">请输入管理员密码</p>
+      <input type="password" id="pwInput" placeholder="密码" onkeydown="if(event.key==='Enter')verifyPw()">
+      <div class="pw-error" id="pwError"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closePwModal()">取消</button>
+      <button class="btn btn-purple" onclick="verifyPw()">确认</button>
+    </div>
+  </div>
+</div>
+
+<!-- Column Editor Modal -->
+<div class="modal-overlay" id="colModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="colModalTitle">添加新列</h3>
+      <button class="modal-close" onclick="closeColModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field-group"><label>列名称 *</label><input type="text" id="colLabel" placeholder="如：植株高度(cm)"></div>
+      <div class="field-group">
+        <label>字段类型 *</label>
+        <select id="colType" onchange="onColTypeChange()">
+          <option value="text">文本输入</option><option value="number">数字输入</option><option value="date">日期选择</option><option value="select">下拉选择</option>
+        </select>
+      </div>
+      <div class="field-group" id="colOptionsGroup" style="display:none">
+        <label>下拉选项</label><input type="text" id="colOptions" placeholder="用英文逗号分隔，如：是,否">
+        <div class="hint">多个选项用英文逗号(,)分隔</div>
+      </div>
+      <div class="field-group"><label>列宽度(px)</label><input type="number" id="colWidth" value="120" min="60" max="400"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeColModal()">取消</button>
+      <button class="btn btn-primary" onclick="saveColumn()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- View History Entry Modal -->
+<div class="modal-overlay" id="historyModal">
+  <div class="modal" style="width:90vw; max-width:1000px; max-height:90vh;">
+    <div class="modal-header">
+      <h3 id="historyModalTitle">历史记录详情</h3>
+      <button class="modal-close" onclick="closeHistoryModal()">✕</button>
+    </div>
+    <div class="modal-body" id="historyModalBody" style="max-height:60vh;overflow-y:auto;"></div>
+    <div class="modal-footer">
+      <button class="btn btn-purple btn-sm" onclick="adminEditHistory('${id}')" id="btnEditHistory" style="display:none">✏️ 管理员修改</button>
+      <button class="btn btn-outline btn-sm" onclick="deleteHistoryEntry()" id="btnDeleteHistory" style="display:none">🗑️ 删除此记录</button>
+      <button class="btn btn-secondary btn-sm" onclick="closeHistoryModal()">关闭</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// =================== Default Sheet Definitions ===================
+const DEFAULT_SHEETS = [
+  {id:'s1',name:'1-试验地块基本信息',icon:'📍',title:'试验地块基本信息',desc:'记录各试验地块的基础信息，每地块填写一行。地块编号建议采用：九里香参照组J-CK、J-T1；福建茶试验组T1(不修剪)、T2(疏伐)；对照组CK(常规修剪)。',note:'',metaFields:[{key:'date',label:'记录日期',type:'date'},{key:'recorder',label:'记录人',type:'text'}],columns:[{key:'plotId',label:'地块编号',type:'select',options:['J-CK','J-T1','F-CK','F-T1','F-T2'],width:100},{key:'group',label:'所属组别',type:'select',options:['组1-对照','组1-试验','组2-对照组','组2-试验组'],width:110},{key:'species',label:'绿篱物种',type:'select',options:['九里香 Murraya paniculata','福建茶 Carmona retusa'],width:180},{key:'treatment',label:'处理方式',type:'select',options:['常规修剪（现状维持）','停止修剪（参照）','不修剪','疏伐（移除部分植株）'],width:160},{key:'area',label:'地块面积(m²)',type:'number',width:100},{key:'length',label:'绿篱长度(m)',type:'number',width:100},{key:'height',label:'绿篱高度(m)',type:'number',width:100},{key:'width',label:'绿篱宽度(m)',type:'number',width:100},{key:'density',label:'种植密度(株/m)',type:'number',width:110},{key:'photo',label:'拍照记录',type:'text',width:120},{key:'remark',label:'备注',type:'text',width:150}]},
+  {id:'s2',name:'2-植物生长监测',icon:'🌱',title:'植物生长监测记录表',desc:'每个地块设3个样方，每个样方选3株标记植株进行定期测量。监测频率：每月1次。',note:'叶片密度等级：1=极稀疏(几乎无叶) 2=稀疏 3=中等 4=较密 5=密集\n新梢长度：量取最新伸展的3条新梢平均长度；新梢数量：计数当月新增可见新梢数',metaFields:[{key:'date',label:'调查日期',type:'date'},{key:'recorder',label:'调查人',type:'text'}],columns:[{key:'plotId',label:'地块编号',type:'select',options:['J-CK','J-T1','F-CK','F-T1','F-T2'],width:100},{key:'height',label:'植株高度(cm)',type:'number',width:100},{key:'crownWidth',label:'冠层宽度(cm)',type:'number',width:100},{key:'crownThickness',label:'冠层厚度(cm)',type:'number',width:100},{key:'newShoot',label:'有无新梢',type:'select',options:['有','无'],width:80},{key:'shootLen',label:'新梢长度(cm)',type:'number',width:100},{key:'branchCount',label:'分枝数',type:'number',width:80},{key:'leafDensity',label:'叶片密度(级1-5)',type:'select',options:['1','2','3','4','5'],width:100},{key:'pruneScar',label:'修剪伤痕可见',type:'select',options:['是','否'],width:100},{key:'photo',label:'拍照记录',type:'text',width:120},{key:'remark',label:'备注',type:'text',width:150}]},
+  {id:'s3',name:'3-开花结果监测',icon:'🌸',title:'开花与结果监测记录表',desc:'记录绿篱植株开花和结果情况，重点关注蜜源/食果资源功能恢复。监测频率：每周1次（花期加密为每3天1次）。',note:'开花状态等级：0=无花 1=零星花(<5%) 2=少量花(5-25%) 3=较多花(25-50%) 4=大量花(>50%)\n结果状态等级：0=无果 1=零星果 2=少量果 3=较多果 4=大量果\n访花昆虫观测方法：在每个样方固定观察点，静站10分钟，记录访花昆虫种类和访问次数\n食果鸟记录：站立观察10分钟，记录鸟类取食',metaFields:[{key:'date',label:'调查日期',type:'date'},{key:'recorder',label:'调查人',type:'text'}],columns:[{key:'plotId',label:'地块编号',type:'select',options:['J-CK','J-T1','F-CK','F-T1','F-T2'],width:100},{key:'species',label:'物种',type:'select',options:['九里香 Murraya paniculata','福建茶 Carmona retusa'],width:160},{key:'bloomStatus',label:'开花状态(级0-4)',type:'select',options:['0','1','2','3','4'],width:100},{key:'inflorescence',label:'花序数量',type:'number',width:90},{key:'bloomStage',label:'花期阶段',type:'select',options:['初','盛','末'],width:90},{key:'flowerColor',label:'花色',type:'text',width:80},{key:'pollinatorSpecies',label:'访花昆虫种类数',type:'number',width:100},{key:'pollinatorCount',label:'访花昆虫个体数(次/10min)',type:'number',width:130},{key:'fruitStatus',label:'结果状态(级0-4)',type:'select',options:['0','1','2','3','4'],width:100},{key:'fruitCount',label:'果序数量',type:'number',width:90},{key:'frugivore',label:'食果鸟记录',type:'text',width:130},{key:'remark',label:'备注',type:'text',width:150}]},
+  {id:'s4',name:'4-传粉昆虫监测',icon:'🐝',title:'传粉昆虫访问监测记录表',desc:'重点监测传粉昆虫（蜜蜂、蝶类、蝇类等）对绿篱花资源的利用情况。',note:'记录方法：在每个样方设立固定观测点，静站观测15分钟，记录进入样方范围内所有传粉昆虫的类别及数量。尽量拍摄昆虫照片用于后续鉴定。\n监测频率：花期每周1次，非花期每2周1次。观测时段：9:00-11:00、14:00-16:00。',metaFields:[{key:'date',label:'调查日期',type:'date'},{key:'period',label:'调查时段',type:'select',options:['9:00-11:00','14:00-16:00']},{key:'weather',label:'天气',type:'select',options:['晴','阴','雨']},{key:'temp',label:'气温(°C)',type:'number'},{key:'recorder',label:'调查人',type:'text'}],columns:[{key:'plotId',label:'地块编号',type:'select',options:['J-CK','J-T1','F-CK','F-T1','F-T2'],width:100},{key:'beeSpecies',label:'蜜蜂类-种类',type:'text',width:100},{key:'beeCount',label:'蜜蜂类-个体数',type:'number',width:100},{key:'butterflySpecies',label:'蝶类-种类',type:'text',width:100},{key:'butterflyCount',label:'蝶类-个体数',type:'number',width:100},{key:'flySpecies',label:'蝇类-种类',type:'text',width:100},{key:'flyCount',label:'蝇类-个体数',type:'number',width:100},{key:'otherSpecies',label:'其他传粉昆虫-种类',type:'text',width:120},{key:'otherCount',label:'其他传粉昆虫-个体数',type:'number',width:120},{key:'totalVisit',label:'访花总次数',type:'number',width:90},{key:'photoId',label:'昆虫拍照/采集编号',type:'text',width:130},{key:'remark',label:'备注',type:'text',width:150}]},
+  {id:'s5',name:'5-鸟类访问监测',icon:'🐦',title:'鸟类访问监测记录表',desc:'记录鸟类对绿篱的利用情况（觅食、栖息、筑巢等），重点关注食果鸟类。监测频率：每月2次。观测时段：7:00-9:00。',note:'行为分类：觅食(取食果实/花/虫)、栖息(停歇在绿篱上)、穿越(飞经)、筑巢(在绿篱内筑巢或探巢)\n食果鸟判断：直接取食绿篱果实的鸟类计为食果鸟；常见食果鸟如白头鹎、红耳鹎、暗绿绣眼鸟等',metaFields:[{key:'date',label:'调查日期',type:'date'},{key:'period',label:'调查时段',type:'text'},{key:'weather',label:'天气',type:'select',options:['晴','阴','雨']},{key:'recorder',label:'调查人',type:'text'}],columns:[{key:'plotId',label:'地块编号',type:'select',options:['J-CK','J-T1','F-CK','F-T1','F-T2'],width:100},{key:'quadrateId',label:'样方编号',type:'text',width:80},{key:'duration',label:'观测时长(min)',type:'number',width:100},{key:'bird1Name',label:'鸟类物种1-名称',type:'text',width:110},{key:'bird1Count',label:'鸟类物种1-数量',type:'number',width:90},{key:'bird1Behavior',label:'鸟类物种1-行为',type:'select',options:['觅食','栖息','穿越','筑巢'],width:100},{key:'bird2Name',label:'鸟类物种2-名称',type:'text',width:110},{key:'bird2Count',label:'鸟类物种2-数量',type:'number',width:90},{key:'bird2Behavior',label:'鸟类物种2-行为',type:'select',options:['觅食','栖息','穿越','筑巢'],width:100},{key:'bird3Name',label:'鸟类物种3-名称',type:'text',width:110},{key:'bird3Count',label:'鸟类物种3-数量',type:'number',width:90},{key:'bird3Behavior',label:'鸟类物种3-行为',type:'select',options:['觅食','栖息','穿越','筑巢'],width:100},{key:'totalSpecies',label:'鸟类总种类数',type:'number',width:90},{key:'totalCount',label:'鸟类总个体数',type:'number',width:90},{key:'frugivoreCount',label:'食果鸟种类数',type:'number',width:90},{key:'remark',label:'备注',type:'text',width:150}]},
+  {id:'s6',name:'6-林下植被调查',icon:'🌿',title:'林下植被调查记录表',desc:'记录绿篱林下植被的种类组成与覆盖情况。监测频率：每季度1次。',note:'生活型分类：乔木/灌木/草本/藤本；覆盖度：目测估计该物种在样方内的投影覆盖百分比',metaFields:[{key:'date',label:'调查日期',type:'date'},{key:'recorder',label:'调查人',type:'text'}],columns:[{key:'plotId',label:'地块编号',type:'select',options:['J-CK','J-T1','F-CK','F-T1','F-T2'],width:100},{key:'under1Name',label:'林下物种1-名称',type:'text',width:120},{key:'under1Count',label:'林下物种1-株数',type:'number',width:100},{key:'under1Height',label:'林下物种1-高度(cm)',type:'number',width:110},{key:'under2Name',label:'林下物种2-名称',type:'text',width:120},{key:'under2Count',label:'林下物种2-株数',type:'number',width:100},{key:'under2Height',label:'林下物种2-高度(cm)',type:'number',width:110},{key:'under3Name',label:'林下物种3-名称',type:'text',width:120},{key:'under3Count',label:'林下物种3-株数',type:'number',width:100},{key:'under3Height',label:'林下物种3-高度(cm)',type:'number',width:110},{key:'coverage',label:'总覆盖度(%)',type:'number',width:90},{key:'remark',label:'备注',type:'text',width:150}]},
+  {id:'s7',name:'7-管养成本记录',icon:'💰',title:'管养成本记录表',desc:'记录各地块的管养投入，用于比较不同处理方式的维护成本差异。每月汇总1次。',note:'对照组C1记录常规修剪管养全成本；按实际发生记录，无操作填0\n费用=工时×人工单价+材料费；人工单价按公园实际管养合同单价填写，在备注中注明单价标准',metaFields:[{key:'month',label:'记录月份',type:'month'}],columns:[{key:'plotId',label:'地块编号',type:'select',options:['J-CK','J-T1','F-CK','F-T1','F-T2'],width:100},{key:'treatment',label:'处理方式',type:'select',options:['常规修剪（现状维持）','停止修剪（参照）','不修剪','疏伐（移除部分植株）'],width:160},{key:'prunePersons',label:'修剪-人次',type:'number',width:90},{key:'pruneHours',label:'修剪-工时(h)',type:'number',width:90},{key:'thinPersons',label:'疏伐-人次',type:'number',width:90},{key:'thinHours',label:'疏伐-工时(h)',type:'number',width:90},{key:'irrigPersons',label:'灌溉-人次',type:'number',width:90},{key:'irrigHours',label:'灌溉-工时(h)',type:'number',width:90},{key:'otherHours',label:'其他管养-工时(h)',type:'number',width:100},{key:'totalCost',label:'当月总费用(元)',type:'number',width:100},{key:'remark',label:'备注',type:'text',width:150}]}
+];
+
+// =================== Global State ===================
+let SHEETS = [];          // Sheet definitions
+let draftState = {};      // Current draft (always starts empty)
+let history = [];         // All submitted records
+let activeTab = 's1';
+let isAdmin = false;
+let isViewHistory = false; // Whether we're in history viewing mode
+let editingColSheetId = null;
+let editingColIndex = -1;
+let viewingHistoryId = null; // Currently viewed history entry id
+let recorderName = '';    // 填表人姓名
+
+const ADMIN_PASSWORD = 'lvli2026';
+const ADMIN_WECHAT = '18665372773';
+const SCHEMA_KEY = 'hedge_monitor_schema_v1';
+const HISTORY_KEY = 'hedge_monitor_history_v1';
+
+function deepClone(obj) { return JSON.parse(JSON.stringify(obj)); }
+
+// =================== Schema ===================
+function initSchema() {
+  try {
+    const saved = localStorage.getItem(SCHEMA_KEY);
+    SHEETS = saved ? JSON.parse(saved) : deepClone(DEFAULT_SHEETS);
+    if (!saved) saveSchema();
+  } catch(e) { SHEETS = deepClone(DEFAULT_SHEETS); }
+}
+
+function saveSchema() {
+  try { localStorage.setItem(SCHEMA_KEY, JSON.stringify(SHEETS)); } catch(e) {}
+}
+
+// =================== Draft State (always fresh) ===================
+function initDraft() {
+  SHEETS.forEach(s => {
+    draftState[s.id] = { meta:{}, rows:[] };
+    s.metaFields.forEach(f => { draftState[s.id].meta[f.key] = ''; });
+  });
+  // Auto-fill today's date
+  SHEETS.forEach(sheet => {
+    sheet.metaFields.forEach(f => {
+      if (f.type === 'date') draftState[sheet.id].meta[f.key] = new Date().toISOString().split('T')[0];
+      if (f.type === 'month') draftState[sheet.id].meta[f.key] = new Date().toISOString().substring(0,7);
+    });
+  });
+}
+
+// =================== History Storage ===================
+function loadHistory() {
+  try {
+    const saved = localStorage.getItem(HISTORY_KEY);
+    history = saved ? JSON.parse(saved) : [];
+  } catch(e) { history = []; }
+}
+
+function saveHistory() {
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history)); } catch(e) {}
+}
+
+// =================== Submit Handler ===================
+function handleSubmit() {
+  const recent = getRecentModifiableEntry();
+  if (recent) {
+    // Within 5 min — edit mode
+    editRecentSubmission();
+  } else {
+    submitData();
+  }
+}
+
+function updateSubmitButton() {
+  const btn = document.getElementById('btnSubmit');
+  if (!btn) return;
+  const recent = getRecentModifiableEntry();
+  if (recent) {
+    btn.textContent = '✏️ 修改数据';
+    btn.className = 'btn btn-sm';
+    btn.style.background = 'var(--amber-200)';
+    btn.style.color = 'var(--amber-700)';
+    btn.style.fontWeight = '600';
+  } else {
+    btn.textContent = '📤 提交数据';
+    btn.className = 'btn btn-success';
+    btn.style.background = '';
+    btn.style.color = '';
+    btn.style.fontWeight = '';
+  }
+}
+
+function submitData() {
+  // 检查填表人姓名
+  const rn = getRecorderName();
+  if (!rn) {
+    document.getElementById('recorderWarning').style.display = 'inline';
+    document.getElementById('recorderName').focus();
+    showToast('请先填写填表人姓名', 'error');
+    return;
+  }
+  document.getElementById('recorderWarning').style.display = 'none';
+
+  // Check if any sheet has data
+  let hasData = false;
+  SHEETS.forEach(s => {
+    if (draftState[s.id].rows.length > 0) hasData = true;
+    s.metaFields.forEach(f => { if (draftState[s.id].meta[f.key]) hasData = true; });
+  });
+
+  if (!hasData) { showToast('请先填写数据再提交', 'error'); return; }
+
+  const entry = {
+    id: 'h_' + Date.now(),
+    time: Date.now(),
+    recorder: rn,
+    label: rn,
+    data: deepClone(draftState)
+  };
+
+  history.unshift(entry);
+  saveHistory();
+
+  let totalRows = 0;
+  SHEETS.forEach(s => { totalRows += draftState[s.id].rows.length; });
+  showToast('✅ 已提交！' + rn + ' · ' + totalRows + '条记录已保存至本地历史', 'success');
+
+  initDraft();
+  renderTabs();
+  renderContent();
+}
+
+// =================== Admin Mode ===================
+function toggleAdmin() {
+  if (isAdmin) {
+    isAdmin = false;
+    isViewHistory = false;
+    updateModeUI();
+    initDraft();
+    renderTabs();
+    renderContent();
+    showToast('已退出管理员模式', 'success');
+  } else {
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwError').textContent = '';
+    document.getElementById('pwModal').classList.add('show');
+    setTimeout(() => document.getElementById('pwInput').focus(), 100);
+  }
+}
+
+function verifyPw() {
+  if (document.getElementById('pwInput').value === ADMIN_PASSWORD) {
+    isAdmin = true;
+    closePwModal();
+    updateModeUI();
+    showHistoryList();
+    showToast('管理员模式已开启 · 显示历史数据', 'success');
+  } else {
+    document.getElementById('pwError').textContent = '密码错误，请重试';
+    document.getElementById('pwInput').value = '';
+  }
+}
+
+function closePwModal() { document.getElementById('pwModal').classList.remove('show'); }
+
+function updateModeUI() {
+  const indicator = document.getElementById('modeIndicator');
+  const modeText = document.getElementById('modeText');
+  const btn = document.getElementById('adminToggleBtn');
+  const banner = document.getElementById('adminBanner');
+  const subtitle = document.getElementById('subtitle');
+  const submitBtn = document.getElementById('btnSubmit');
+  const adminBtns = document.getElementById('adminOnlyBtns');
+
+  // 管理员专属按钮仅在管理员模式下显示
+  if (adminBtns) adminBtns.style.display = isAdmin ? 'contents' : 'none';
+
+  if (isAdmin && isViewHistory) {
+    indicator.className = 'mode-indicator history';
+    modeText.textContent = '历史数据';
+    btn.textContent = '🔒 退出管理';
+    banner.style.display = 'block';
+    document.getElementById('adminBannerText').innerHTML = '📋 历史数据查看模式 — 可浏览、导出或删除历史记录';
+    subtitle.textContent = '管理员 · 查看所有提交记录';
+    submitBtn.style.display = 'none';
+  } else if (isAdmin) {
+    indicator.className = 'mode-indicator admin';
+    modeText.textContent = '管理员模式';
+    btn.textContent = '🔒 退出管理';
+    banner.style.display = 'block';
+    document.getElementById('adminBannerText').innerHTML = '🔧 管理员模式已开启 — 可编辑列定义、增删行。修改表格结构后，填写者将看到更新后的表格。';
+    subtitle.textContent = '管理员 · 填写并提交后追加到历史记录';
+    submitBtn.style.display = 'inline-flex';
+  } else {
+    indicator.className = 'mode-indicator fill';
+    modeText.textContent = '填写模式';
+    btn.textContent = '🔐 管理员模式';
+    banner.style.display = 'none';
+    subtitle.textContent = '每次打开均为空白表格 · 填写完成后提交保存';
+    submitBtn.style.display = 'inline-flex';
+  }
+  updateSubmitButton();
+}
+
+// =================== History Viewer ===================
+function showHistoryList() {
+  isViewHistory = true;
+  updateModeUI();
+  renderTabs();
+  renderHistoryContent();
+}
+
+function showFillMode() {
+  isViewHistory = false;
+  updateModeUI();
+  initDraft();
+  renderTabs();
+  renderContent();
+}
+
+function renderHistoryContent() {
+  let html = `<div class="tab-panel active">`;
+
+  html += `<div class="history-actions">
+    <button class="btn btn-primary btn-sm" onclick="showFillMode()">✏️ 返回填写</button>
+    <button class="btn btn-outline btn-sm" onclick="importMultipleJSON()">📂 导入汇总</button>
+    <button class="btn btn-outline btn-sm" onclick="exportAllHistoryExcel()">📥 导出汇总Excel</button>
+    <button class="btn btn-danger btn-sm" onclick="clearAllHistory()">🗑️ 清空全部历史</button>
+    <span style="margin-left:auto;font-size:13px;color:var(--gray-500)">共 ${history.length} 条提交记录</span>
+  </div>`;
+
+  html += `<div class="history-list">`;
+
+  if (history.length === 0) {
+    html += `<div class="history-empty">📭 暂无提交记录<br><span style="font-size:13px;color:var(--gray-400)">填写数据后点击"提交数据"即可在此查看</span></div>`;
+  } else {
+    history.forEach((entry, idx) => {
+      let totalRows = 0;
+      SHEETS.forEach(s => {
+        if (entry.data[s.id]) totalRows += entry.data[s.id].rows.length;
+      });
+      const timeMs = typeof entry.time === 'number' ? entry.time : new Date(entry.time).getTime();
+      const timeStr = new Date(timeMs).toLocaleString('zh-CN', {month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
+      const recorderLabel = entry.recorder || entry.label || '未署名';
+      html += `<div class="history-card" onclick="viewHistoryEntry('${entry.id}')">
+        <div class="hc-info">
+          <div class="hc-title">👤 ${recorderLabel}</div>
+          <div class="hc-meta">${timeStr} · 共 ${totalRows} 条记录 · ${getSheetSummary(entry.data)}</div>
+        </div>
+        <span class="hc-badge">${totalRows}条</span>
+      </div>`;
+    });
+  }
+
+  html += `</div></div>`;
+  document.getElementById('appContent').innerHTML = html;
+}
+
+function getSheetSummary(data) {
+  let parts = [];
+  SHEETS.forEach(s => {
+    if (data[s.id] && data[s.id].rows.length > 0) {
+      parts.push(s.icon + data[s.id].rows.length);
+    }
+  });
+  return parts.join(' ') || '无数据';
+}
+
+function viewHistoryEntry(id) {
+  viewingHistoryId = id;
+  const entry = history.find(h => h.id === id);
+  if (!entry) return;
+
+  document.getElementById('historyModalTitle').textContent = '历史记录：' + entry.label + ' (' + new Date(typeof entry.time==='number'?entry.time:entry.time).toLocaleString('zh-CN') + ')';
+  document.getElementById('btnDeleteHistory').style.display = isAdmin ? 'inline-flex' : 'none';
+  document.getElementById('btnEditHistory').style.display = isAdmin ? 'inline-flex' : 'none';
+
+  let bodyHtml = '';
+  SHEETS.forEach(sheet => {
+    const sd = entry.data[sheet.id];
+    if (!sd || sd.rows.length === 0) return;
+    bodyHtml += `<div style="margin-bottom:24px">
+      <h4 style="color:var(--green-700);margin-bottom:8px">${sheet.icon} ${sheet.title}</h4>`;
+
+    // Meta
+    if (sheet.metaFields.length) {
+      let metaParts = [];
+      sheet.metaFields.forEach(f => {
+        if (sd.meta[f.key]) metaParts.push(`${f.label}：${sd.meta[f.key]}`);
+      });
+      if (metaParts.length) bodyHtml += `<div style="font-size:12px;color:var(--gray-500);margin-bottom:8px">${metaParts.join(' | ')}</div>`;
+    }
+
+    // Table
+    bodyHtml += `<div class="history-table-wrapper"><div style="overflow-x:auto;"><table class="data-table readonly-table">
+      <thead><tr><th style="width:36px">#</th>${sheet.columns.map(c => `<th style="min-width:${c.width}px">${c.label}</th>`).join('')}</tr></thead>
+      <tbody>`;
+    sd.rows.forEach((row, ri) => {
+      bodyHtml += `<tr><td class="row-num">${ri+1}</td>`;
+      sheet.columns.forEach(col => {
+        bodyHtml += `<td>${row[col.key] !== undefined && row[col.key] !== '' ? row[col.key] : '<span style="color:#ccc">—</span>'}</td>`;
+      });
+      bodyHtml += `</tr>`;
+    });
+    bodyHtml += `</tbody></table></div></div></div>`;
+  });
+
+  document.getElementById('historyModalBody').innerHTML = bodyHtml || '<p style="color:var(--gray-500)">此记录无数据</p>';
+  document.getElementById('historyModal').classList.add('show');
+}
+
+function closeHistoryModal() {
+  document.getElementById('historyModal').classList.remove('show');
+}
+
+function deleteHistoryEntry() {
+  if (!viewingHistoryId) return;
+  if (!confirm('确定删除此条历史记录吗？不可恢复。')) return;
+  history = history.filter(h => h.id !== viewingHistoryId);
+  saveHistory();
+  closeHistoryModal();
+  showHistoryList();
+  showToast('记录已删除', 'success');
+}
+
+function clearAllHistory() {
+  if (!confirm('确定清空全部历史记录吗？此操作不可恢复！')) return;
+  history = [];
+  saveHistory();
+  showHistoryList();
+  showToast('全部历史已清空', 'success');
+}
+
+// =================== Column Management ===================
+function openAddColModal(sheetId) {
+  editingColSheetId = sheetId; editingColIndex = -1;
+  document.getElementById('colModalTitle').textContent = '添加新列';
+  document.getElementById('colLabel').value = '';
+  document.getElementById('colType').value = 'text';
+  document.getElementById('colWidth').value = 120;
+  document.getElementById('colOptions').value = '';
+  document.getElementById('colOptionsGroup').style.display = 'none';
+  document.getElementById('colModal').classList.add('show');
+}
+
+function openEditColModal(sheetId, colIdx) {
+  const sheet = SHEETS.find(s => s.id === sheetId);
+  const col = sheet.columns[colIdx];
+  editingColSheetId = sheetId; editingColIndex = colIdx;
+  document.getElementById('colModalTitle').textContent = '编辑列：' + col.label;
+  document.getElementById('colLabel').value = col.label;
+  document.getElementById('colType').value = col.type;
+  document.getElementById('colWidth').value = col.width || 120;
+  if (col.type === 'select' && col.options) {
+    document.getElementById('colOptions').value = col.options.join(',');
+    document.getElementById('colOptionsGroup').style.display = 'block';
+  } else {
+    document.getElementById('colOptions').value = '';
+    document.getElementById('colOptionsGroup').style.display = 'none';
+  }
+  document.getElementById('colModal').classList.add('show');
+}
+
+function closeColModal() { document.getElementById('colModal').classList.remove('show'); }
+function onColTypeChange() { document.getElementById('colOptionsGroup').style.display = (document.getElementById('colType').value === 'select') ? 'block' : 'none'; }
+
+function saveColumn() {
+  const label = document.getElementById('colLabel').value.trim();
+  if (!label) { showToast('请输入列名称', 'error'); return; }
+  const type = document.getElementById('colType').value;
+  const width = parseInt(document.getElementById('colWidth').value) || 120;
+  let options = null;
+  if (type === 'select') {
+    const raw = document.getElementById('colOptions').value.trim();
+    if (!raw) { showToast('下拉类型请填写选项', 'error'); return; }
+    options = raw.split(',').map(s => s.trim()).filter(s => s);
+  }
+  const sheet = SHEETS.find(s => s.id === editingColSheetId);
+  if (editingColIndex === -1) {
+    const key = 'col_' + Date.now();
+    sheet.columns.push({ key, label, type, options, width });
+  } else {
+    const col = sheet.columns[editingColIndex];
+    col.label = label; col.type = type; col.width = width;
+    if (type === 'select') col.options = options; else delete col.options;
+  }
+  saveSchema();
+  closeColModal();
+  renderContent();
+  showToast(editingColIndex === -1 ? '列已添加' : '列已更新', 'success');
+}
+
+function deleteColumn(sheetId, colIdx) {
+  const sheet = SHEETS.find(s => s.id === sheetId);
+  const col = sheet.columns[colIdx];
+  if (confirm('确定删除列「' + col.label + '」吗？该列所有历史数据中对应字段也会在查看时缺失。')) {
+    sheet.columns.splice(colIdx, 1);
+    saveSchema();
+    renderContent();
+    showToast('列已删除', 'success');
+  }
+}
+
+function resetSheetSchema(sheetId) {
+  if (confirm('确定恢复此表为默认列定义吗？自定义添加/修改的列将丢失。')) {
+    const defaultSheet = DEFAULT_SHEETS.find(s => s.id === sheetId);
+    const idx = SHEETS.findIndex(s => s.id === sheetId);
+    SHEETS[idx] = deepClone(defaultSheet);
+    saveSchema();
+    renderContent();
+    showToast('已恢复默认列定义', 'success');
+  }
+}
+
+// =================== Render ===================
+function renderTabs() {
+  const bar = document.getElementById('tabBar');
+  if (isViewHistory) {
+    bar.innerHTML = `<div class="tab-item active" onclick="showHistoryList()">📋 历史记录 <span class="tab-badge">${history.length}</span></div>`;
+    return;
+  }
+  bar.innerHTML = SHEETS.map(s => `
+    <div class="tab-item ${s.id===activeTab?'active':''}" onclick="switchTab('${s.id}')">
+      ${s.icon} ${s.name}
+      <span class="tab-badge" id="badge-${s.id}">${draftState[s.id].rows.length}</span>
+    </div>
+  `).join('');
+}
+
+function renderContent() {
+  if (isViewHistory) { renderHistoryContent(); return; }
+  const sheet = SHEETS.find(s => s.id === activeTab);
+  if (!sheet) return;
+  const sd = draftState[sheet.id];
+  let html = `<div class="tab-panel active">`;
+
+  html += `<div class="sheet-info">
+    <h2>${sheet.icon} ${sheet.title}</h2>
+    <p>${sheet.desc}</p>`;
+  if (sheet.note) html += `<div class="note">${sheet.note.replace(/\n/g,'<br>')}</div>`;
+  html += `</div>`;
+
+  if (isAdmin) {
+    html += `<div class="admin-bar">
+      <span class="label">🔧 表格结构编辑</span>
+      <button class="btn btn-purple btn-sm" onclick="openAddColModal('${sheet.id}')">➕ 添加列</button>
+      <button class="btn btn-secondary btn-sm" onclick="resetSheetSchema('${sheet.id}')">↩️ 恢复默认列</button>
+      ${!isViewHistory ? `<button class="btn btn-outline btn-sm" onclick="showHistoryList()" style="margin-left:auto">📋 查看历史数据</button>` : ''}
+    </div>`;
+  }
+
+  if (sheet.metaFields.length) {
+    html += `<div class="form-meta">`;
+    sheet.metaFields.forEach(f => {
+      const val = sd.meta[f.key] || '';
+      let inputHtml = f.type === 'select'
+        ? `<select onchange="updateMeta('${sheet.id}','${f.key}',this.value)"><option value="">请选择</option>${f.options.map(o => `<option value="${o}" ${val===o?'selected':''}>${o}</option>`).join('')}</select>`
+        : `<input type="${f.type}" value="${val}" onchange="updateMeta('${sheet.id}','${f.key}',this.value)">`;
+      html += `<div class="field"><label>${f.label}</label>${inputHtml}</div>`;
+    });
+    html += `</div>`;
+  }
+
+  html += `<div class="data-table-wrapper"><div style="overflow-x:auto;"><table class="data-table">
+    <thead><tr>
+      <th style="width:36px">#</th>
+      ${sheet.columns.map((c, ci) => isAdmin
+        ? `<th style="min-width:${c.width}px" title="点击列名编辑"><span style="cursor:pointer" onclick="openEditColModal('${sheet.id}',${ci})">${c.label}</span><button class="col-del-btn" onclick="deleteColumn('${sheet.id}',${ci})" title="删除此列">✕</button></th>`
+        : `<th style="min-width:${c.width}px">${c.label}</th>`
+      ).join('')}
+      ${isAdmin ? '<th class="th-admin-actions"></th>' : ''}
+    </tr></thead>
+    <tbody id="tbody-${sheet.id}">`;
+
+  if (sd.rows.length === 0) {
+    html += `<tr class="empty-row"><td colspan="${sheet.columns.length + (isAdmin?2:1)}">暂无数据，点击下方"添加一行"开始填写</td></tr>`;
+  } else {
+    sd.rows.forEach((row, idx) => { html += renderRow(sheet, row, idx); });
+  }
+
+  html += `</tbody></table></div>
+    <div class="table-footer">
+      <button class="btn btn-primary btn-sm" onclick="addRow('${sheet.id}')">➕ 添加一行</button>
+      <button class="btn btn-secondary btn-sm" onclick="addRow('${sheet.id}',5)">➕ 添加5行</button>`;
+  if (isAdmin && sd.rows.length > 0) {
+    html += `<button class="btn btn-danger btn-sm" onclick="clearSheetDraft('${sheet.id}')">🗑️ 清空此表</button>`;
+  }
+  html += `</div></div>`;
+
+  // Submit bar (non-admin only)
+  if (!isAdmin) {
+    const recent = getRecentModifiableEntry();
+    const btnLabel = recent ? '✏️ 修改数据' : '📤 提交数据';
+    html += renderCompletionPanel();
+    html += `<div class="submit-bar">
+      <span class="hint-text">💡 所有表格填写完成后，点击"${recent ? '修改数据' : '提交数据'}"将数据保存至本地历史。</span>
+      <button class="btn ${recent ? '' : 'btn-success'}" onclick="handleSubmit()" style="${recent ? 'background:var(--amber-200);color:var(--amber-700);font-weight:600;display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:none;border-radius:var(--radius);font-size:14px;cursor:pointer;' : ''}">${btnLabel}</button>
+    </div>`;
+  }
+
+  html += `</div>`;
+  document.getElementById('appContent').innerHTML = html;
+  updateSubmitButton();
+}
+
+function renderRow(sheet, row, idx) {
+  let cells = `<td class="row-num">${idx+1}</td>`;
+  sheet.columns.forEach(col => {
+    const val = row[col.key] !== undefined ? row[col.key] : '';
+    if (col.type === 'select') {
+      cells += `<td><select onchange="updateCell('${sheet.id}',${idx},'${col.key}',this.value)"><option value="">请选择</option>${(col.options||[]).map(o => `<option value="${o}" ${val===o?'selected':''}>${o}</option>`).join('')}</select></td>`;
+    } else {
+      cells += `<td><input type="${col.type}" value="${val}" onchange="updateCell('${sheet.id}',${idx},'${col.key}',this.value)"></td>`;
+    }
+  });
+  if (isAdmin) cells += `<td><button class="del-row-btn" onclick="deleteRow('${sheet.id}',${idx})" title="删除此行">✕</button></td>`;
+  return `<tr>${cells}</tr>`;
+}
+
+function switchTab(id) { activeTab = id; renderTabs(); renderContent(); }
+function updateMeta(sheetId, key, val) { draftState[sheetId].meta[key] = val; }
+function updateCell(sheetId, rowIdx, key, val) { draftState[sheetId].rows[rowIdx][key] = val; }
+
+function addRow(sheetId, count) {
+  count = count || 1;
+  const sheet = SHEETS.find(s => s.id === sheetId);
+  for (let i = 0; i < count; i++) {
+    const row = {};
+    sheet.columns.forEach(c => { row[c.key] = ''; });
+    draftState[sheetId].rows.push(row);
+  }
+  renderContent();
+  updateBadge(sheetId);
+}
+
+function deleteRow(sheetId, idx) {
+  draftState[sheetId].rows.splice(idx, 1);
+  renderContent();
+  updateBadge(sheetId);
+}
+
+function clearSheetDraft(sheetId) {
+  if (confirm('确定清空此表当前填写内容吗？')) {
+    draftState[sheetId].rows = [];
+    sheet = SHEETS.find(s => s.id === sheetId);
+    sheet.metaFields.forEach(f => { draftState[sheetId].meta[f.key] = ''; });
+    renderContent();
+    updateBadge(sheetId);
+  }
+}
+
+function updateBadge(sheetId) {
+  const badge = document.getElementById('badge-' + sheetId);
+  if (badge) badge.textContent = draftState[sheetId].rows.length;
+}
+
+// =================== Export ===================
+function exportJSON() {
+  const rn = getRecorderName() || '未署名';
+  const safeName = rn.replace(/[\\\/\?\*\[\]:]/g, '_');
+  const data = JSON.stringify({ schema: SHEETS, draft: draftState, history, recorder: rn }, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = formatDate() + '_' + safeName + '_绿篱监测数据.json'; a.click();
+  URL.revokeObjectURL(url);
+  showToast('JSON已导出', 'success');
+}
+
+function importJSON() { importMultipleJSON(); }
+
+function importMultipleJSON() {
+  if (!isAdmin) {
+    showToast('导入汇总功能仅限管理员使用', 'error');
+    return;
+  }
+  const input = document.getElementById('fileInput');
+  input.setAttribute('multiple', 'multiple');
+  input.onchange = function(e) {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+    
+    let totalMerged = 0;
+    let totalDup = 0;
+    let processed = 0;
+    const existingIds = new Set(history.map(h => h.id));
+
+    function processNext(index) {
+      if (index >= files.length) {
+        // 全部处理完毕
+        history.sort((a, b) => (typeof b.time==='number'?b.time:new Date(b.time).getTime()) - (typeof a.time==='number'?a.time:new Date(a.time).getTime()));
+        saveHistory();
+        showToast('✅ 导入完成！共处理 ' + files.length + ' 个文件，新增 ' + totalMerged + ' 条' + (totalDup > 0 ? '（去重跳过 ' + totalDup + ' 条）' : '') + '，历史共 ' + history.length + ' 条', 'success');
+        showHistoryList();
+        input.value = '';
+        return;
+      }
+      const file = files[index];
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        try {
+          const parsed = JSON.parse(ev.target.result);
+          const entries = parsed.history || (parsed.draft ? [{ id: 'h_' + Date.now() + '_' + index, time: Date.now(), recorder: parsed.recorder || '未知', label: parsed.recorder || '未知', data: parsed.draft }] : []);
+          entries.forEach(entry => {
+            if (!existingIds.has(entry.id)) {
+              history.push(entry);
+              existingIds.add(entry.id);
+              totalMerged++;
+            } else {
+              totalDup++;
+            }
+          });
+        } catch(err) {
+          // 跳过无法解析的文件
+        }
+        processed++;
+        processNext(index + 1);
+      };
+      reader.readAsText(file);
+    }
+    processNext(0);
+  };
+  input.click();
+}
+
+function exportExcel() {
+  const rn = getRecorderName();
+  if (!rn) {
+    document.getElementById('recorderWarning').style.display = 'inline';
+    document.getElementById('recorderName').focus();
+    showToast('请先填写填表人姓名', 'error');
+    return;
+  }
+  document.getElementById('recorderWarning').style.display = 'none';
+
+  const wb = XLSX.utils.book_new();
+  SHEETS.forEach(sheet => {
+    const sd = draftState[sheet.id];
+    let aoa = [];
+    aoa.push([sheet.title]); aoa.push([sheet.desc]);
+    aoa.push(['填表人：' + rn]);
+    let metaRow = [];
+    sheet.metaFields.forEach(f => { metaRow.push(f.label + ': ' + (sd.meta[f.key] || '')); });
+    aoa.push(metaRow); aoa.push([]);
+    aoa.push(sheet.columns.map(c => c.label));
+    sd.rows.forEach(row => { aoa.push(sheet.columns.map(c => row[c.key] !== undefined ? row[c.key] : '')); });
+    if (sheet.note) { aoa.push([]); sheet.note.split('\n').forEach(l => aoa.push([l])); }
+    const ws = XLSX.utils.aoa_to_sheet(aoa);
+    ws['!merges'] = [{ s:{r:0,c:0}, e:{r:0,c:sheet.columns.length-1} },{ s:{r:1,c:0}, e:{r:1,c:sheet.columns.length-1} }];
+    ws['!cols'] = sheet.columns.map(c => ({ wch: Math.max(c.label.length*2, 12) }));
+    XLSX.utils.book_append_sheet(wb, ws, sheet.name.replace(/[\\\/\?\*\[\]:]/g, '_').substring(0,31));
+  });
+
+  const dateStr = formatDate();
+  const safeName = rn.replace(/[\\\/\?\*\[\]:]/g, '_');
+  const filename = dateStr + '_' + safeName + '_绿篱监测记录.xlsx';
+  XLSX.writeFile(wb, filename);
+
+  // 同时导出JSON（供管理员导入汇总用）
+  exportJSONForSend(rn, dateStr, safeName);
+
+  // Show send-to-admin prompt
+  showSendToast(filename);
+}
+
+// 导出JSON用于管理员汇总（静默，不弹提示）
+function exportJSONForSend(rn, dateStr, safeName) {
+  const entry = {
+    id: 'h_' + Date.now(),
+    time: Date.now(),
+    recorder: rn,
+    label: rn,
+    data: deepClone(draftState)
+  };
+  const data = JSON.stringify({ schema: SHEETS, history: [entry], recorder: rn }, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = dateStr + '_' + safeName + '_绿篱监测数据(导入用).json'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function exportAllHistoryExcel() {
+  if (history.length === 0) { showToast('暂无历史记录可导出', 'error'); return; }
+
+  const wb = XLSX.utils.book_new();
+
+  SHEETS.forEach(sheet => {
+    // 收集所有历史中该子表的数据
+    let allRows = [];
+    history.forEach(entry => {
+      const sd = entry.data[sheet.id];
+      if (!sd || sd.rows.length === 0) return;
+      const timeStr = new Date(typeof entry.time==='number'?entry.time:entry.time).toLocaleString('zh-CN', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+      const recorder = entry.recorder || entry.label || '未知';
+      sd.rows.forEach(row => {
+        const mergedRow = {};
+        mergedRow['填表时间'] = timeStr;
+        mergedRow['填表人'] = recorder;
+        sheet.columns.forEach(c => {
+          mergedRow[c.label] = row[c.key] !== undefined ? row[c.key] : '';
+        });
+        allRows.push(mergedRow);
+      });
+    });
+
+    if (allRows.length === 0) return; // 该子表无数据，跳过
+
+    // 按时间排序
+    allRows.sort((a, b) => a['填表时间'].localeCompare(b['填表时间']));
+
+    // 构建表头：填表时间 + 填表人 + 原有列
+    const headers = ['填表时间', '填表人'].concat(sheet.columns.map(c => c.label));
+    let aoa = [[sheet.title], ['填表人', '填表时间', '—', '—'], []]; // 占位行
+    aoa.push(headers);
+    allRows.forEach(row => {
+      aoa.push(headers.map(h => row[h] !== undefined ? row[h] : ''));
+    });
+
+    const ws = XLSX.utils.aoa_to_sheet(aoa);
+    ws['!merges'] = [{ s:{r:0,c:0}, e:{r:0,c:headers.length-1} }];
+    ws['!cols'] = headers.map((h, i) => {
+      if (i === 0) return { wch: 20 }; // 填表时间
+      if (i === 1) return { wch: 12 }; // 填表人
+      const col = sheet.columns[i - 2];
+      return { wch: col ? Math.max(col.label.length * 2, 12) : 12 };
+    });
+    XLSX.utils.book_append_sheet(wb, ws, sheet.name.replace(/[\\\/\?\*\[\]:]/g, '_').substring(0, 31));
+  });
+
+  XLSX.writeFile(wb, '绿篱监测汇总_' + formatDate() + '.xlsx');
+  showToast('汇总Excel已导出，共 ' + history.length + ' 条提交记录', 'success');
+}
+
+function formatDate() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast show ' + (type||'');
+  setTimeout(() => { t.className = 'toast'; }, 3000);
+}
+
+// =================== Completion Panel ===================
+function renderCompletionPanel() {
+  let html = `<div class="completion-panel">
+    <h3>📋 填写完成度检查</h3>
+    <div class="completion-grid">`;
+
+  let doneCount = 0;
+  SHEETS.forEach(s => {
+    const sd = draftState[s.id];
+    const rowCount = sd.rows.length;
+    const isDone = rowCount > 0;
+    if (isDone) doneCount++;
+    html += `<div class="completion-item ${isDone ? 'done' : 'empty'}">
+      <span class="ci-icon">${isDone ? '✅' : '⬜'}</span>
+      <span>${s.icon} ${s.name}</span>
+      <span class="ci-count">${isDone ? rowCount + '行' : '空'}</span>
+    </div>`;
+  });
+
+  const total = SHEETS.length;
+  html += `</div>`;
+  html += `<div class="completion-summary">
+    已填 <span class="${doneCount > 0 ? 'ok' : 'warn'}">${doneCount}/${total}</span> 个工作表` +
+    (doneCount > 0 ? '，空白工作表可跳过不填' : '，请先填写数据') +
+    `</div>`;
+  html += `</div>`;
+
+  return html;
+}
+
+// =================== 5-Minute Modify Window (silent) ===================
+// If the latest submission is within 5 min, the submit button label changes to "修改数据"
+function getRecentModifiableEntry() {
+  if (isAdmin || history.length === 0) return null;
+  const latest = history[0];
+  const timeMs = typeof latest.time === 'number' ? latest.time : new Date(latest.time).getTime();
+  const elapsed = Date.now() - timeMs;
+  if (elapsed < 5 * 60 * 1000) return latest;
+  return null;
+}
+
+function editRecentSubmission() {
+  const entry = getRecentModifiableEntry();
+  if (!entry) {
+    showToast('修改窗口已关闭，请联系管理员修改', 'error');
+    return;
+  }
+  // Load the entry data into draft
+  draftState = deepClone(entry.data);
+  // Remove the old entry from history
+  history = history.filter(h => h.id !== entry.id);
+  saveHistory();
+  renderTabs();
+  renderContent();
+  showToast('数据已回填，修改完成后请重新提交', 'success');
+}
+
+// =================== Admin Edit History ===================
+function adminEditHistory(entryId) {
+  if (!isAdmin) return;
+  const entry = history.find(h => h.id === entryId);
+  if (!entry) return;
+
+  if (!confirm('将把此历史记录回填到表格中供修改。原记录将保留，修改后需重新提交。继续？')) return;
+
+  // Keep the original but load a copy into draft
+  draftState = deepClone(entry.data);
+
+  closeHistoryModal();
+  isViewHistory = false;
+  updateModeUI();
+  activeTab = 's1';
+  renderTabs();
+  renderContent();
+  showToast('管理员：历史数据已回填，修改后请重新提交', 'success');
+}
+
+// =================== Recorder Name ===================
+function getRecorderName() {
+  const input = document.getElementById('recorderName');
+  if (input) return input.value.trim();
+  return recorderName;
+}
+
+function onRecorderChange() {
+  recorderName = getRecorderName();
+  document.getElementById('recorderWarning').style.display = 'none';
+  // 自动回填记录人字段到各子表
+  SHEETS.forEach(s => {
+    s.metaFields.forEach(f => {
+      if (f.key === 'recorder') draftState[s.id].meta[f.key] = recorderName;
+    });
+  });
+}
+
+// =================== Send to Admin Toast ===================
+function showSendToast(filename) {
+  document.getElementById('exportedFileName').textContent = '📎 ' + filename;
+  document.getElementById('sendToast').classList.add('show');
+}
+
+function closeSendToast() {
+  document.getElementById('sendToast').classList.remove('show');
+}
+
+// =================== Init ===================
+initSchema();
+initDraft();
+loadHistory();
+
+// 尝试恢复填表人姓名
+try {
+  recorderName = localStorage.getItem('hedge_monitor_recorder') || '';
+  const input = document.getElementById('recorderName');
+  if (input && recorderName) {
+    input.value = recorderName;
+    onRecorderChange();
+  }
+} catch(e) {}
+
+// 填表人姓名变更时自动保存
+document.getElementById('recorderName').addEventListener('change', function() {
+  try { localStorage.setItem('hedge_monitor_recorder', this.value.trim()); } catch(e) {}
+  onRecorderChange();
+});
+
+renderTabs();
+renderContent();
+updateModeUI();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+</body>
+</html>
